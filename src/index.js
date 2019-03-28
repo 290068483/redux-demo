@@ -1,12 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import * as actions from "./actions/cart-actions";
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import store from "./store";
+const App = <h1>Redux Shopping Cart</h1>;
+let unsubscribe = store.subscribe(() => console.log(store.getState()));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+store.dispatch(actions.addToCart("Coffee 500gm", 1, 250));
+store.dispatch(actions.addToCart("Flour 1kg", 2, 110));
+store.dispatch(actions.addToCart("Juice 2L", 1, 250));
+// Update Cart
+store.dispatch(actions.updateCart("Flour 1kg", 10, 110));
+// Delete from Cart
+// store.dispatch(actions.deleteFromCart("Coffee 500gm"));
+unsubscribe();
+ReactDOM.render(
+  <Provider store={store}>{App}</Provider>,
+  document.getElementById("root")
+);
+
+
+
+
+
+
+
+
